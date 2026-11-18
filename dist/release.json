@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0+629e5219f35a",
+  "version": "0.4.0+67f6a6b70173",
   "channel": "development",
   "minShell": 1,
   "notes": "캐릭터 액션 연출, 회원 계정과 클라우드 전투, 안전한 업데이트",
@@ -14,7 +14,7 @@
     },
     {
       "path": "build.js",
-      "sha256": "4588fb73eb4faa7fc0c8d12ea743886bf107a281be4c107eba8047baa99a555a"
+      "sha256": "47ba43f2c552e92d6f9cd2f0d1fea7223e21ed5c97d5b84236a7f58e56f9c780"
     },
     {
       "path": "cloud.js",
@@ -46,19 +46,23 @@
     },
     {
       "path": "index.html",
-      "sha256": "6271fbc13c781daadb887c0bbebdcb26288046a9540c8459324a04006361def8"
+      "sha256": "22601b5a33f906e95e62514b24f491e7455d377b2346e61065680567b0ec07d8"
+    },
+    {
+      "path": "install-ui.js",
+      "sha256": "44efcc4f212bc8e60412418aa23e218c09a0ef866d3ce8c5f603ddb3bd70f2a6"
     },
     {
       "path": "install.css",
-      "sha256": "94b6b273c2c8ca75c1ae559fd34947e0714413d249d9ecded76fc1df8af67af7"
+      "sha256": "8993cbae5d2729c6a6117c2aaf283a159574603cc6859b12774aa1170b315635"
     },
     {
       "path": "install.html",
-      "sha256": "d88016326d99c95888aaeab9d03dbd4e48f75866a844f3a66d377f0ecc2d3cc8"
+      "sha256": "91c0c4a9bbbbd243667f63cec57a9908355109f8774fc8abeef8b1a116c28311"
     },
     {
       "path": "install.js",
-      "sha256": "8b978a6edc43bfa65851bbdd01168bff77532596b268fba72adb060c507acae3"
+      "sha256": "cb2d23fdc9bc021cca69d1c4e9cd4e6b4a4d035157dab417e366d1327ef04684"
     },
     {
       "path": "live.css",

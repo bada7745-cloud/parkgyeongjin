@@ -1,1 +1,1 @@
-window.PC_RELEASE={"version":"0.4.0+629e5219f35a","channel":"development"};
+window.PC_RELEASE={"version":"0.4.0+67f6a6b70173","channel":"development"};
