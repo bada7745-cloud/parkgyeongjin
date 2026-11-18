@@ -1,0 +1,11 @@
+.git
+.github
+node_modules
+server/data
+**/*.sqlite*
+.env
+Pocket_Critters_Preview.html
+android
+ios
+*.zip
+

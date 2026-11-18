@@ -1,0 +1,57 @@
+name: Build mobile test packages
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["dist/**", "android/**", "ios/**", "configure-mobile.cjs", ".github/workflows/mobile-build.yml"]
+permissions:
+  contents: read
+jobs:
+  android:
+    if: vars.GAME_ORIGIN != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Configure trusted game origin
+        env:
+          GAME_ORIGIN: ${{ vars.GAME_ORIGIN }}
+        run: |
+          test -n "$GAME_ORIGIN"
+          node configure-mobile.cjs "$GAME_ORIGIN"
+      - name: Compile Android debug APK
+        run: gradle -p android --no-daemon assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pocket-critters-android-test-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+  ios-simulator:
+    if: vars.GAME_ORIGIN != ''
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Configure trusted game origin
+        env:
+          GAME_ORIGIN: ${{ vars.GAME_ORIGIN }}
+        run: |
+          test -n "$GAME_ORIGIN"
+          node configure-mobile.cjs "$GAME_ORIGIN"
+      - name: Compile simulator app only
+        run: xcodebuild -project ios/PocketCritters.xcodeproj -scheme PocketCritters -sdk iphonesimulator -configuration Debug -derivedDataPath ios/build CODE_SIGNING_ALLOWED=NO build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pocket-critters-ios-SIMULATOR-NOT-IPA
+          path: ios/build/Build/Products/Debug-iphonesimulator/PocketCritters.app
+

@@ -1,0 +1,4 @@
+const fs=require('fs'),p=require('path'),root=p.join(__dirname,'dist');let h=fs.readFileSync(p.join(root,'index.html'),'utf8');
+for(let file of ['style.css','live.css'])h=h.replace(`<link rel="stylesheet" href="${file}">`,'<style>'+fs.readFileSync(p.join(root,file),'utf8')+'</style>');
+for(let file of ['build.js','engine.js','renderer.js','gamefx.js','app.js','account.js','updates.js'])h=h.replace(`<script src="${file}"></script>`,'<script>'+fs.readFileSync(p.join(root,file),'utf8').replace(/<\/script/gi,'<\\/script')+'</script>');
+h=h.replace('<link rel="manifest" href="manifest.webmanifest">','').replace('<link rel="icon" href="icon.svg" type="image/svg+xml">','').replace('<link rel="apple-touch-icon" href="icon-192.png">','');fs.writeFileSync(p.join(__dirname,'Pocket_Critters_Preview.html'),h);console.log('Offline preview prepared. Account and live updates require the deployed server.');

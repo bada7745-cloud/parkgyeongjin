@@ -1,0 +1,63 @@
+name: Verify and deploy mobile game
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pocket-critters-production
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm run release
+      - run: npm test
+      - name: Build release archive
+        run: tar -czf release.tar.gz dist server package.json Dockerfile compose.yml Caddyfile
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-server
+          path: release.tar.gz
+  deploy:
+    if: vars.DEPLOY_MODE == 'ssh'
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: verified-server
+      - name: Configure pinned SSH access
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+      - name: Deploy checked release and verify health
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          test -n "$DEPLOY_HOST" && test -n "$DEPLOY_USER"
+          scp -o BatchMode=yes -o StrictHostKeyChecking=yes release.tar.gz "$DEPLOY_USER@$DEPLOY_HOST:/srv/pocket-critters/incoming.tar.gz"
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$DEPLOY_USER@$DEPLOY_HOST" bash -s -- "$GITHUB_SHA" <<'REMOTE'
+          set -eu
+          case "$1" in *[!a-f0-9]*|'') exit 1;; esac
+          release="/srv/pocket-critters/releases/$1"
+          mkdir -p "$release"
+          tar -xzf /srv/pocket-critters/incoming.tar.gz -C "$release"
+          cd "$release"
+          docker compose --env-file /srv/pocket-critters/production.env -p pocketcritters up -d --build --wait --wait-timeout 120
+          docker compose --env-file /srv/pocket-critters/production.env -p pocketcritters exec -T game node -e "fetch('http://127.0.0.1:8787/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+          ln -sfn "$release" /srv/pocket-critters/current
+          REMOTE
+

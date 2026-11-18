@@ -1,0 +1,1 @@
+{"name":"pocket-critters-mobile","version":"0.3.0","private":true,"description":"Mobile game, independent account server and controlled live updates","engines":{"node":">=24.0.0"},"scripts":{"start":"node server/server.cjs","test":"node --test tests/engine.test.cjs tests/server.test.cjs tests/update.test.cjs","release":"node release.cjs"}}

@@ -1,0 +1,76 @@
+{
+  "version": "0.3.0+7ac9e13ce3ea",
+  "channel": "development",
+  "minShell": 1,
+  "notes": "캐릭터 액션 연출, 회원 계정과 클라우드 전투, 안전한 업데이트",
+  "assets": [
+    {
+      "path": "account.js",
+      "sha256": "38a8f68e6e180a996d605ec738d68643d656e22a206f1902e70f95ce389e0ba6"
+    },
+    {
+      "path": "app.js",
+      "sha256": "ee3995e59b7310984029edcf5361eaa0dcd6c91d0ec37a7d3bdfe7be70f4b90d"
+    },
+    {
+      "path": "build.js",
+      "sha256": "6b277456438a2d68e43ed1536afa09f87088559138d4aa741b8389fe19ff4c8d"
+    },
+    {
+      "path": "engine.js",
+      "sha256": "a0651556e062b539aade19a73250957fea031ff65ebfbf1b762d598ad0f08343"
+    },
+    {
+      "path": "gamefx.js",
+      "sha256": "d92ca6e1406804fb7b040b79c5dfff168e6ca8166d5f297704714099b5384f5c"
+    },
+    {
+      "path": "icon-192.png",
+      "sha256": "5d67c50a385e7dbf5e50c2129ea7aad38cebad0b53804242abda2919703d1b1f"
+    },
+    {
+      "path": "icon-512.png",
+      "sha256": "9016f5aaa0da689a4102bf190705b05e9ad321add6e4c43f48e144debe0f8e27"
+    },
+    {
+      "path": "icon.svg",
+      "sha256": "ae0734fe3ec8559e2745c9279eb65dd2ec0dc376abfcda9eaf76030ca3975cf1"
+    },
+    {
+      "path": "index.html",
+      "sha256": "ba935c27cf86add024a52aa41ca0b46feec53f4ff0e0f42be9a7da5f78c2ac27"
+    },
+    {
+      "path": "install.css",
+      "sha256": "94b6b273c2c8ca75c1ae559fd34947e0714413d249d9ecded76fc1df8af67af7"
+    },
+    {
+      "path": "install.html",
+      "sha256": "d88016326d99c95888aaeab9d03dbd4e48f75866a844f3a66d377f0ecc2d3cc8"
+    },
+    {
+      "path": "install.js",
+      "sha256": "7c0cfe1af09d00ca7793ef8e10259b99c2d3642c7c71d06e9aaa84945a62d8ff"
+    },
+    {
+      "path": "live.css",
+      "sha256": "8b598ca929b6d9fcdf365c54b20caa40a5a33aee9aa0356603fa1e1038bf95d5"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "sha256": "38a6423e0f5f2385a1689cadfaf11a1d0af22025bb9cf835e77d9026691f0fb4"
+    },
+    {
+      "path": "renderer.js",
+      "sha256": "5e9cee00325ab5df3ae926b705b8c7b8ede00023c0cab33b95574b815211dfce"
+    },
+    {
+      "path": "style.css",
+      "sha256": "1548344349f2e8cbd4dca622c9f6bc4e3b72685d06ab0ceaab73306007facdbe"
+    },
+    {
+      "path": "updates.js",
+      "sha256": "0ca56d9962ff993cfc71bf29087b1f60e8a0d8d709e9e437ba8b27c77fcf1f89"
+    }
+  ]
+}

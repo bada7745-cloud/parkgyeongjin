@@ -1,0 +1,35 @@
+services:
+  game:
+    build: .
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PUBLIC_ORIGIN: https://${GAME_DOMAIN:?Set GAME_DOMAIN}
+      DB_PATH: /data/game.sqlite
+      HOST: 0.0.0.0
+      PORT: 8787
+    volumes:
+      - game_data:/data
+    expose: ["8787"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8787/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 4s
+      retries: 6
+  gateway:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      GAME_DOMAIN: ${GAME_DOMAIN:?Set GAME_DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      game:
+        condition: service_healthy
+volumes:
+  game_data:
+  caddy_data:
+  caddy_config:

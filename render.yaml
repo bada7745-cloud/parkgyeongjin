@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: pocket-critters-game
+    runtime: docker
+    plan: 0.5c-512mb
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_PATH
+        value: /data/game.sqlite
+      - key: HOST
+        value: 0.0.0.0
+    disk:
+      name: pocket-critters-data
+      mountPath: /data
+      sizeGB: 1
+

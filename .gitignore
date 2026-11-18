@@ -1,0 +1,11 @@
+server/data/
+.env
+*.sqlite*
+node_modules/
+android/.gradle/
+android/local.properties
+android/app/build/
+ios/build/
+*.keystore
+*.p12
+*.mobileprovision

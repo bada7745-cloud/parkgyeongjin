@@ -1,0 +1,5 @@
+const fs=require('fs'),path=require('path');let origin=process.argv[2]||'';
+if(origin){let u=new URL(origin);if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||!['','/'].includes(u.pathname))throw Error('Use an HTTPS origin, without a path, query or credentials');origin=u.origin}
+const dest=path.join(__dirname,'android/app/src/main/assets');fs.mkdirSync(dest,{recursive:true});fs.cpSync(path.join(__dirname,'dist'),dest,{recursive:true});fs.writeFileSync(path.join(dest,'app-config.json'),JSON.stringify({gameOrigin:origin,shellVersion:1,channel:'development'},null,2));
+const ios=path.join(__dirname,'ios/PocketCritters');fs.cpSync(path.join(__dirname,'dist'),path.join(ios,'Game'),{recursive:true});let plist=fs.readFileSync(path.join(ios,'Info.plist'),'utf8');plist=plist.replace(/(<key>GameOrigin<\/key><string>)[^<]*(<\/string>)/,(_,a,b)=>a+origin+b);fs.writeFileSync(path.join(ios,'Info.plist'),plist);
+console.log(origin?'Mobile shells configured for '+origin:'Mobile shells use bundled offline preview; live account/update host is NOT configured.');

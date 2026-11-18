@@ -1,0 +1,3 @@
+const {Game,STEP}=require('../dist/engine.js');let wins=[0,0,0],turns=[],openers=[0,0],firstWins=0;const count=100;
+for(let n=0;n<count;n++){let g=new Game({seed:4817+n*717,mode:'local',firstTeam:n%2});g.human=()=>false;let first=g.team;openers[first]++;for(let i=0;i<180000&&g.phase!=='ended';i++)g.step(STEP);if(g.phase!=='ended')throw Error('simulation stalled at '+n);wins[g.winner<0?2:g.winner]++;if(g.winner===first)firstWins++;turns.push(g.turn)}
+console.log(JSON.stringify({matches:count,teamWins:wins,openers,firstPlayerWins:firstWins,meanTurns:turns.reduce((a,b)=>a+b,0)/count,minTurns:Math.min(...turns),maxTurns:Math.max(...turns),note:'AI vs AI; does not replace human playtests'},null,2));
