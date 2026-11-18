@@ -1,0 +1,32 @@
+name: Check distributed Android APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/check-apk.yml"]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Download the exact distributed APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: bada7745-cloud/parkgyeongjin
+        run: gh release download android-preview-2e8916ae --pattern Pocket-Critters-Android.apk
+      - name: Check complete download
+        run: |
+          echo 'ecad3cc3f7880d1ebe9d1b220cc826084853a95577a096815ddcff01fb00218f  Pocket-Critters-Android.apk' | sha256sum --check
+          unzip -t Pocket-Critters-Android.apk
+          stat --printf='APK bytes: %s\n' Pocket-Critters-Android.apk
+      - name: Verify Android signing and package requirements
+        run: |
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -n 1)
+          AAPT=$(find "$ANDROID_HOME/build-tools" -name aapt -type f | sort -V | tail -n 1)
+          "$SIGNER" verify --verbose --print-certs Pocket-Critters-Android.apk
+          "$AAPT" dump badging Pocket-Critters-Android.apk
