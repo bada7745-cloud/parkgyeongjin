@@ -1,4 +1,4 @@
-const BUILD='0.4.0+67f6a6b70173';const CACHE='pc-live-'+BUILD;
+const BUILD='0.4.0+3bfbf64ba5d6';const CACHE='pc-live-'+BUILD;
 // Install a complete, integrity-checked release. Never cache account or save API responses.
 self.addEventListener('install',event=>event.waitUntil((async()=>{
  const r=await fetch('./release.json',{cache:'no-store'});if(!r.ok)throw Error('release unavailable');const release=await r.json();if(release.version!==BUILD)throw Error('release mismatch');
