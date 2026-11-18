@@ -1,0 +1,13 @@
+{
+  "provider": "render",
+  "repository": "bada7745-cloud/parkgyeongjin",
+  "branch": "main",
+  "workspaceId": "tea-dbulttuk1f9s73am4jag",
+  "blueprintId": "exs-dbum4dom7kps73cr1u1g",
+  "planningOutcome": "failed",
+  "blockingReason": "need_payment_info",
+  "serviceCreated": false,
+  "autoSyncConfigured": true,
+  "autoDeployActive": false,
+  "updatedDate": "2026-11-18"
+}
