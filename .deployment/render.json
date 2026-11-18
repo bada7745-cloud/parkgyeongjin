@@ -7,7 +7,7 @@
   "planningOutcome": "failed",
   "blockingReason": "need_payment_info",
   "serviceCreated": false,
-  "autoSyncConfigured": true,
+  "autoSyncConfigured": false,
   "autoDeployActive": false,
   "updatedDate": "2026-11-18"
 }
