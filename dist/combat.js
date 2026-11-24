@@ -1,5 +1,5 @@
 (function(root){'use strict';const C=root.Critters,{Game,clamp}=C;
-class PowerCharge{constructor(){this.cancel();}start(){this.active=true;this.elapsed=0;this.value=20;return this.value;}step(dt){if(this.active){this.elapsed+=Math.max(0,dt);const phase=(this.elapsed/1.5)%2;this.value=20+80*(phase<=1?phase:2-phase);}return this.value;}cancel(){this.active=false;this.elapsed=0;this.value=20;}}
+class PowerCharge{constructor(){this.cancel();}start(){this.active=true;this.elapsed=0;this.value=1;return this.value;}step(dt){if(this.active){this.elapsed+=Math.max(0,dt);const phase=(this.elapsed/1.5)%2;this.value=1+99*(phase<=1?phase:2-phase);}return this.value;}cancel(){this.active=false;this.elapsed=0;this.value=1;}}
 C.PowerCharge=PowerCharge;
 const select=Game.prototype.select;Game.prototype.select=function(i){return this.charging?false:select.call(this,i);};
 const fire=Game.prototype.fire;Game.prototype.fire=function(a=this.angle,p=this.power,internal=false){const face=this.active.face,ok=fire.call(this,a,p,internal);if(!internal)this.active.face=face;return ok;};

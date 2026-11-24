@@ -7,3 +7,5 @@ body.playing:has(#arsenal:not([hidden])) #hud{z-index:19}body.playing #arsenal{p
 @media(orientation:portrait){.aim-controls{flex-basis:100%;width:100%}.elevation-control{flex-basis:130px}.power-control{min-width:0}body.playing #weaponCards{grid-template-columns:repeat(2,minmax(0,1fr))!important}#arsenal>div:first-child b:after{display:none}}
 
 body.playing #hud{z-index:9}
+
+#ropeTools{display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:10px;color:#d0e7d6}#ropeTools button{min-height:32px;border-radius:7px;padding:5px 9px;background:#3c626b;font-size:10px;touch-action:none}#ropeTools span{margin-right:auto}@media(max-width:650px){#ropeTools span{display:none}#ropeTools{gap:4px}#ropeTools button{font-size:9px;padding:4px 7px}}
