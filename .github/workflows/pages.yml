@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 24
       - run: node release.cjs
-      - run: node --test tests/engine.test.cjs tests/cloud.test.cjs tests/update.test.cjs
+      - run: node --test tests/*.test.cjs
       - uses: actions/configure-pages@v5
         with:
           enablement: true
