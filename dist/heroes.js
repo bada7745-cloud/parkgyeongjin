@@ -1,0 +1,13 @@
+/* Original Nightfall heroes. Abilities are resolved before victory checks. */
+(function(root){'use strict';const C=root.Critters,{Game}=C,E=root.WormEconomy;
+E.HEROES.push(
+{id:'parasite',name:'페러사이트웜',price:1250,tokens:2,hp:95,attack:1,skill:'사망 시 생체 폭발 · 반경 95 / 최대 피해 42 · 아군 주의',color:'#9f9acb',shade:'#504f7b',style:'parasite'},
+{id:'archangel',name:'대천사웜',price:1800,tokens:4,hp:100,attack:.95,skill:'경기당 1회 · 최대 체력 30%로 부활 · 공격력 −5%',color:'#f2e4c7',shade:'#ba9d7c',style:'archangel'});
+const create=C.createBattle;C.createBattle=function(o={}){const g=create(o);for(const u of g.units){if(u.character==='parasite')u.parasiteSpent=false;if(u.character==='archangel'){u.reviveUsed=false;u.reviveGrace=0;}}return g;};
+const damage=Game.prototype.damage;Game.prototype.damage=function(u,amount,team,kind='blast'){if(u.hp<=0)return;if(u.reviveGrace>0)return;const before=u.hp,kills=team!==undefined&&team!==u.team?(this.stats.kills?.[team]||0):null;damage.call(this,u,amount,team,kind);if(before<=0||u.hp>0)return;
+if(u.character==='archangel'&&!u.reviveUsed){u.reviveUsed=true;u.hp=Math.max(1,Math.ceil((u.maxHP||100)*.3));u.reviveGrace=.85;u.vx=u.vy=0;u.chilled=false;u.poisonTurns=0;delete u.landing;delete u.fallTop;this.events=this.events.filter(e=>!(e.type==='death'&&e.id===u.id));this.graves=(this.graves||[]).filter(t=>t.id!==u.id);if(kills!==null)this.stats.kills[team]=kills;let relocated=false;if(kind==='water'||u.y+20>=this.water||u.x<35||u.x>C.W-35){const site=this.landingSites().filter(p=>this.alive().every(v=>v.id===u.id||Math.hypot(v.x-p.x,v.y-p.y)>55)).sort((a,b)=>Math.hypot(a.x-u.x,a.y-u.y)-Math.hypot(b.x-u.x,b.y-u.y))[0];if(site){u.x=site.x;u.y=site.y;u.grounded=true;relocated=true;}else{u.x=C.clamp(u.x,70,C.W-70);u.y=this.water-95;u.vy=-120;u.grounded=false;}}this.emit('heroRevive',{id:u.id,x:u.x,y:u.y,hp:u.hp,relocated});return;}
+if(u.character==='parasite'&&!u.parasiteSpent){u.parasiteSpent=true;const x=u.x,y=u.y,radius=95;this.emit('parasiteBurst',{id:u.id,x,y:y-10,r:radius});const previous=this._impact;this._impact={owner:u.id,weapon:-1,scale:1};try{for(const target of this.alive()){const distance=Math.hypot(target.x-x,target.y-y);if(distance>=radius)continue;this.damage(target,42*(1-distance/radius),u.team,'parasite');if(target.hp>0){target.vx+=(target.x>=x?1:-1)*(1-distance/radius)*170;target.vy-=70;target.grounded=false;}}}finally{this._impact=previous;}}
+};
+const step=Game.prototype.step;Game.prototype.step=function(dt=C.STEP){if(!this.paused&&this.phase!=='ended')for(const u of this.units)u.reviveGrace=Math.max(0,(u.reviveGrace||0)-dt);return step.call(this,dt);};
+if(typeof module!=='undefined')module.exports=C;
+})(globalThis);

@@ -1,10 +1,10 @@
 'use strict';const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');const root=path.join(__dirname,'dist'),pkg=require('./package.json');
 const baseVersion=process.env.RELEASE_VERSION||pkg.version;if(!/^\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?$/.test(baseVersion))throw Error('Invalid release version');
-const sources=fs.readdirSync(root).filter(n=>/\.(js|css|html|png|svg|webmanifest)$/.test(n)&&!['build.js','sw.js'].includes(n)).sort();
+const sources=fs.readdirSync(root).filter(n=>/\.(js|css|html|png|jpe?g|svg|webmanifest)$/.test(n)&&!['build.js','sw.js'].includes(n)).sort();
 const contentHash=crypto.createHash('sha256');for(const f of sources){contentHash.update(f);contentHash.update(fs.readFileSync(path.join(root,f)))}contentHash.update(fs.readFileSync(path.join(__dirname,'server/sw-template.js')));
 const version=baseVersion+'+'+contentHash.digest('hex').slice(0,12);
 fs.writeFileSync(path.join(root,'build.js'),`window.PC_RELEASE=${JSON.stringify({version,channel:'development'})};\n`);
-const files=fs.readdirSync(root).filter(n=>/\.(js|css|html|png|svg|webmanifest)$/.test(n)&&n!=='sw.js');
+const files=fs.readdirSync(root).filter(n=>/\.(js|css|html|png|jpe?g|svg|webmanifest)$/.test(n)&&n!=='sw.js');
 const assets=files.map(file=>({path:file,sha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex')}));
 fs.writeFileSync(path.join(root,'release.json'),JSON.stringify({version,channel:'development',minShell:1,notes:'캐릭터 액션 연출, 회원 계정과 클라우드 전투, 안전한 업데이트',assets},null,2));
 fs.writeFileSync(path.join(root,'sw.js'),fs.readFileSync(path.join(__dirname,'server/sw-template.js'),'utf8').replace('__BUILD__',version));
