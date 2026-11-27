@@ -1,0 +1,13 @@
+# 0.13.0 — Sinking sudden death and pulling ropes
+
+Sudden death begins on combined turn 21. An advance warning appears from turn 18. The solid terrain mask, ground heights and sky structures move down by whole pixels, starting at 1.25 pixels per second and increasing with later turns, capped at 2.4 pixels per second. Water remains fixed except for a map's separate tide rule. Grounded worms, graves, barrels, landed supplies, supply targets, hazard marks and rope anchor chains move consistently with the terrain. Pausing or ending the battle freezes sinking.
+
+Terrain offset, fractional progress and elapsed sinking time are saved. Restore applies craters in base coordinates before shifting the terrain, preserving holes made both before and after sinking. Existing saves keep their current water height and start the new sinking behavior without moving existing terrain abruptly.
+
+Sudden-death visuals use a red sky, eclipse, ash, dark clouds, vignette, announcement and a compact status indicator. Music changes from the original 112 BPM adventure score to an original 146 BPM minor-key score with low percussion, short brass-like synth notes and fast ticking percussion. Existing music volume, mute and background behavior remain active. Leaving the battle or reaching results restores normal music.
+
+The rope now travels up to 720 pixels. Players can aim and fire or tap a visible wall/platform to fire at it. A successful attachment automatically reels toward roughly 45% of the initial length, with a 52-pixel starting minimum. Manual controls reel toward a 48-pixel minimum or extend the line. Movement uses Cartesian velocity and unilateral rope tension instead of the old pendulum projection, allowing both upward lifts and sideways ground drags. Collision sliding and limited corner pivots prevent the old all-or-nothing blocking. Release preserves actual velocity, permitting midair refiring. Destroying an anchor releases the line. A launch costs eight movement fuel; maintaining, swinging and reeling consume movement fuel, while rope ammo is unlimited.
+
+Rope selection hides the irrelevant power gauge. Dedicated pull, extend and release buttons occupy the free center area; touch guidance and shorter fire labels remain readable in landscape and portrait. The help screen describes the new controls and turn threshold.
+
+Validation: 108 Node tests, including nine new sinking/rope regressions; browser scenarios verify real pointer targeting, automatic pull, manual reel/release, non-overlapping rope controls at 844×390, 568×320 and 390×844, red sudden-death state, advancing danger music scheduler, pause and saved resume. Existing campaign, shop, control layout, boss and victory browser checks also pass. No physical mobile device was used.
