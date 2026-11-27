@@ -1,0 +1,9 @@
+# 0.14.0 — Touch controls and the holy-grenade voice
+
+- Disable text selection, dragging and browser long-press callouts throughout the game interface. Preserve native selection and editing in account inputs, textareas and contenteditable fields. External links keep their native link menu.
+- Add five-pixel hit halos to the three 34-pixel angle controls, producing 44-pixel touch areas without crowding the existing layout. Rope controls now have a minimum 44-pixel height. Buttons use appropriate touch-action behavior to suppress double-tap zoom while menus remain scrollable.
+- The weapon menu starts with usable weapons. Four filters show usable weapons, usable attacks, usable tools or the full locked/unlocked collection. Pinned bazooka, rope and teleport actions respect the existing weapon/turn/ammo rules. Selection closes the menu immediately.
+- Remove repeated tool descriptions and hide battlefield-only overlays while the arsenal is open. Expose the menu's expanded state for accessibility.
+- Holy grenade detonation plays an attributed, licensed Hallelujah choir excerpt. The source includes female and male voices; the edited playback emphasizes the higher register. It is not an original Worms sample or a female-only solo. Music temporarily drops to 24% while the choir plays, then recovers. Effects volume and mute apply normally. Audio is bundled for offline use.
+
+Validation: the existing 108 Node tests plus browser checks using touch input and a real held touch; text-selection suppression and editable account fields, quick weapon actions, filter behavior, three viewport layouts, actual holy-grenade detonation, decoded vocal samples, music duck/recovery and mute. Existing stage, boss, grappling, sudden-death and control-layout browser scenarios also pass. Physical Android/iPhone validation is still outstanding.
