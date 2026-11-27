@@ -8,7 +8,7 @@ Credits: choir Capella Ducis, klankbeeld and freesound.org. sound from http://ww
 
 License: https://creativecommons.org/licenses/by/4.0/
 
-The source is a polyphonic church choir with female and male voices. It is not a female-only solo or the original Worms recording. A 5.16-second MP3 excerpt of the public preview is bundled in `dist/holy-voice.js`; playback is slightly higher (+~1.65 semitones, 1.1×), high-passed and gain-shaped. The playback lasts up to 4.65 seconds. Attribution and a modification notice are also visible in the in-game play guide.
+The source is a polyphonic church choir with female and male voices. It is not a male-only solo, a professional solo recording commissioned for this game, or the original Worms recording. A 5.16-second MP3 excerpt remains bundled in `dist/holy-voice.js`. Playback now selects source seconds 0.03–2.96, lowers pitch to 0.82× (~−3.44 semitones), emphasizes the lower register with a low shelf and presence EQ, and filters the high end. The edited cue lasts about 3.57 seconds and fades out before the rest of the clip. Extra holy-grenade arpeggio notes were removed. Attribution and a modification notice remain visible in the in-game guide.
 
 Preview source: https://cdn.freesound.org/previews/189/189961_1648170-lq.mp3
 
